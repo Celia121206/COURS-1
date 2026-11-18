@@ -30,7 +30,6 @@ import {
 import { appliquerEffetBD } from './effetBD.js';
 import { choisirPhrase } from './phrases.js';
 import { reconnaitreSujet } from './reconnaissance.js';
-import { ratioProche } from './ia.js';
 import { useHistorique } from './historique.js';
 
 const TYPE_CASE = 'application/x-bd-case';
@@ -277,9 +276,9 @@ function App() {
 
   // --- Photos ---
   // Chaque photo importée passe par le filtre "dessin de BD". Renvoie les images créées.
-  // Ajoute une image à la galerie (avec ou sans filtre BD) et lance la reconnaissance de son sujet
-  const ajouterALaGalerie = async (original, { effetBD = true } = {}) => {
-    const src = effetBD ? await appliquerEffetBD(original) : original;
+  // Ajoute une image à la galerie (avec le filtre BD) et lance la reconnaissance de son sujet
+  const ajouterALaGalerie = async (original) => {
+    const src = await appliquerEffetBD(original);
     const photo = { id: crypto.randomUUID(), src, sujet: null };
     photosRef.current = [...photosRef.current, photo];
     setPhotos((liste) => [...liste, photo]);
@@ -342,20 +341,6 @@ function App() {
     } finally {
       setCasesEnChargement((liste) => liste.filter((c) => c !== cle));
     }
-  };
-
-  // --- Images créées par l'IA ---
-  // Format de l'image : celui de la case sélectionnée (ou de la première case vide)
-  const caseCibleIA = caseSelectionnee ?? (premiereCaseVide(page) === -1 ? null : premiereCaseVide(page));
-  const caseIA = caseCibleIA === null ? null : casesDeLaPage(page, format)[caseCibleIA];
-  const ratioIA = ratioProche(caseIA ? (caseIA.w * FORMATS[format]) / caseIA.h : FORMATS[format]);
-
-  // L'image générée (déjà dessinée en style BD) va dans la galerie et directement dans la case
-  const placerImageIA = async (image) => {
-    const index = caseCibleIA;
-    const pageCible = indexPage;
-    const src = await ajouterALaGalerie(image, { effetBD: false });
-    placerPhoto(src, index ?? undefined, pageCible);
   };
 
   // Nouvelle disposition de toutes les cases (après un déplacement ou un redimensionnement)
@@ -716,9 +701,6 @@ function App() {
         positionsModifiees={Object.values(page.positions ?? {}).some((p) => !p.points)}
         onReinitialiserPositions={reinitialiserPositions}
         onAjouterElement={ajouterElement}
-        ratioIA={ratioIA}
-        numeroCaseIA={caseCibleIA === null ? null : caseCibleIA + 1}
-        onImageIA={placerImageIA}
       />
 
       {caseImport !== null && (
@@ -731,10 +713,6 @@ function App() {
             setCaseImport(null);
           }}
           onFermer={() => setCaseImport(null)}
-          onIA={() => {
-            setCaseImport(null);
-            setOutil('ia');
-          }}
         />
       )}
 

@@ -920,7 +920,7 @@ kbd {
 
 .onglets {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     gap: 2px;
     padding: 6px;
     border-bottom: 1px solid var(--bordure);
@@ -1787,54 +1787,6 @@ kbd {
 .roue:focus-within {
     outline: 3px solid var(--accent);
     outline-offset: 2px;
-}
-
-/* ---------- Onglet IA ---------- */
-.description-scene {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--bordure);
-    border-radius: var(--rayon);
-    background: #fff;
-    color: var(--texte);
-    font: inherit;
-    font-size: 0.9rem;
-    line-height: 1.45;
-    resize: vertical;
-}
-
-.description-scene:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(232, 121, 58, 0.18);
-}
-
-.succes {
-    margin: 0;
-    padding: 10px 12px;
-    border-radius: 12px;
-    background: #E6F4E7;
-    color: #2E7D32;
-    font-size: 0.82rem;
-    font-weight: 600;
-}
-
-.generation-en-cours {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-    padding: 12px;
-    border-radius: var(--rayon);
-    background: var(--bouton-clair);
-    font-size: 0.84rem;
-    font-weight: 600;
-}
-
-.generation-en-cours > svg {
-    width: 20px;
-    height: 20px;
-    color: var(--accent);
 }
 
 /* ---------- Fenêtre d'import d'une case ---------- */

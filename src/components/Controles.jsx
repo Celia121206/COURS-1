@@ -24,7 +24,6 @@ import {
   Sparkles,
   Type,
   Upload,
-  WandSparkles,
   X,
   Zap,
 } from 'lucide-react';
@@ -39,13 +38,11 @@ import {
   ONOMATOPEES,
   TEXTES,
 } from '../data.js';
-import PanneauIA from './PanneauIA.jsx';
 
 export const TYPE_PHOTO = 'application/x-bd-photo';
 
 const OUTILS = [
   { id: 'galerie', nom: 'Galerie photos', court: 'Photos', Icone: Images },
-  { id: 'ia', nom: "Créer avec l'IA", court: 'IA', Icone: WandSparkles },
   { id: 'textes', nom: 'Textes', court: 'Textes', Icone: Type },
   { id: 'bulles', nom: 'Bulles de texte', court: 'Bulles', Icone: MessageCircle },
   { id: 'cases', nom: 'Cases', court: 'Cases', Icone: LayoutGrid },
@@ -385,7 +382,6 @@ function Format({ format, onChoisir }) {
 
 const DESCRIPTIONS = {
   galerie: 'Importe tes photos : elles deviennent des dessins de BD. Glisse-les sur une case.',
-  ia: "Écris ce que tu vois autour de toi, puis clique sur Générer : l'image va dans la case sélectionnée.",
   textes: 'Le texte se place dans la case sélectionnée, avec une phrase liée à son image.',
   bulles: 'Choisis une forme ; tu pourras tout régler ensuite dans la barre au-dessus de la bulle.',
   cases: 'Nombre, disposition et forme des cases de la page.',
@@ -455,9 +451,6 @@ function Controles(props) {
             onZoomer={props.onZoomerImage}
             onRecentrer={props.onRecentrerImage}
           />
-        )}
-        {outil === 'ia' && (
-          <PanneauIA ratio={props.ratioIA} numeroCase={props.numeroCaseIA} onImage={props.onImageIA} />
         )}
         {outil === 'textes' && (
           <ListeAjout

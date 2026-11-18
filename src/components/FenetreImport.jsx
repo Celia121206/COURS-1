@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Upload, WandSparkles, X } from 'lucide-react';
+import { Upload, X } from 'lucide-react';
 
 // Fenêtre ouverte en cliquant au centre d'une case vide :
 // importer une image de l'ordinateur ou en reprendre une de la galerie
-function FenetreImport({ numeroCase, photos, onFichiers, onChoisir, onFermer, onIA }) {
+function FenetreImport({ numeroCase, photos, onFichiers, onChoisir, onFermer }) {
   const champRef = useRef(null);
   const [survol, setSurvol] = useState(false);
 
@@ -56,11 +56,6 @@ function FenetreImport({ numeroCase, photos, onFichiers, onChoisir, onFermer, on
             onChange={(e) => recevoir(e.target.files)}
           />
         </label>
-
-        <button type="button" className="btn large" onClick={onIA}>
-          <WandSparkles aria-hidden="true" />
-          Créer l'image avec l'IA à partir d'une description
-        </button>
 
         {photos.length > 0 && (
           <>

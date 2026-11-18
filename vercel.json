@@ -1,5 +1,0 @@
-{
-  "functions": {
-    "api/generer-image.js": { "maxDuration": 60 }
-  }
-}
