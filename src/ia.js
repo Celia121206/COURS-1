@@ -20,6 +20,10 @@ export async function genererImage({ description, ratio, signal }) {
     body: JSON.stringify({ description, ratio }),
     signal,
   });
+  // Sur un hébergement sans serveur (GitHub Pages), l'adresse de génération n'existe pas
+  if (reponse.status === 404 || reponse.status === 405) {
+    throw new Error("La génération d'images par l'IA n'est pas disponible sur cette version en ligne du site.");
+  }
   const json = await reponse.json().catch(() => ({}));
   if (!reponse.ok || !json.image) throw new Error(json.erreur || "La génération de l'image a échoué.");
   return json.image;
